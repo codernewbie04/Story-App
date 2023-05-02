@@ -1,22 +1,14 @@
 package com.akmalmf.storyapp.base
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.LayoutRes
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.viewbinding.ViewBinding
 import com.akmalmf.storyapp.R
-import com.akmalmf.storyapp.ui.auth.login.LoginViewModel
 import com.google.android.material.snackbar.Snackbar
-import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.cancelChildren
 
 /**
  * Created by Akmal Muhamad Firdaus on 30/04/2023 11:10.

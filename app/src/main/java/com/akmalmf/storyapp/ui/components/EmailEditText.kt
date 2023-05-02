@@ -4,7 +4,6 @@ package com.akmalmf.storyapp.ui.components
 
 import android.content.Context
 import android.content.res.ColorStateList
-import android.graphics.drawable.Drawable
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.AttributeSet

@@ -1,19 +1,15 @@
 package com.akmalmf.storyapp.ui.auth.login
 
 
-import android.util.Log
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
-import androidx.lifecycle.viewModelScope
 import com.akmalmf.storyapp.data.abstraction.Resource
 import com.akmalmf.storyapp.domain.model.auth.login.LoginResponse
 import com.akmalmf.storyapp.domain.repository.SharePrefRepository
 import com.akmalmf.storyapp.domain.usecase.auth.LoginUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**

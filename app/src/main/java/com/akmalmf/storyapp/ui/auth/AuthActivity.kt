@@ -2,9 +2,8 @@ package com.akmalmf.storyapp.ui.auth
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.appcompat.app.AppCompatActivity
 import com.akmalmf.storyapp.R
 import dagger.hilt.android.AndroidEntryPoint
 

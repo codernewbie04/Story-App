@@ -5,7 +5,6 @@ import com.akmalmf.storyapp.data.constan.SharePrefKey
 import com.akmalmf.storyapp.domain.repository.SharePrefRepository
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
-import javax.inject.Singleton
 
 /**
  * Created by Akmal Muhamad Firdaus on 01/05/2023 13:25.

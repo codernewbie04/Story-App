@@ -18,7 +18,9 @@
             app:destination="@id/storyCreateFragment" />
         <action
             android:id="@+id/action_storyListFragment_to_authActivity"
-            app:destination="@id/authActivity" />
+            app:destination="@id/authActivity"
+            app:popUpTo="@id/storyListFragment"
+            app:popUpToInclusive="true" />
         <argument
             android:name="need_refresh"
             app:argType="boolean" />

@@ -11,7 +11,6 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -25,6 +24,10 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 class NetworkModule {
+    companion object {
+        const val BASE_URL = "https://story-api.dicoding.dev/v1/"
+    }
+
     @Singleton
     @Provides
     fun providesHttpLoggingInterceptor(): HttpLoggingInterceptor{
@@ -47,7 +50,6 @@ class NetworkModule {
     @Provides
     @AuthenticatedRetrofitClient
     fun providesOkHttpClientAuthenticate(httpLoggingInterceptor: HttpLoggingInterceptor, sharePrefRepository: SharePrefRepository): OkHttpClient {
-        Log.i("give_api", "Provide API!")
         val token = sharePrefRepository.getAccessToken()
         return if (token.isEmpty()){
             OkHttpClient
@@ -69,7 +71,7 @@ class NetworkModule {
     @NotAuthenticatedRetrofitClient
     fun provideRetrofitClientNotAuthenticate(@NotAuthenticatedRetrofitClient client: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("https://story-api.dicoding.dev/v1/")
+            .baseUrl(BASE_URL)
             .client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
@@ -80,7 +82,7 @@ class NetworkModule {
     @AuthenticatedRetrofitClient
     fun provideRetrofitClientAuthenticate(@AuthenticatedRetrofitClient client: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("https://story-api.dicoding.dev/v1/")
+            .baseUrl(BASE_URL)
             .client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .build()

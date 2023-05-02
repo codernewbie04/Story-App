@@ -1,21 +1,14 @@
 package com.akmalmf.storyapp.ui.auth.register
 
-import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
-import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
 import androidx.navigation.fragment.findNavController
 import com.akmalmf.storyapp.R
 import com.akmalmf.storyapp.base.BaseFragment
 import com.akmalmf.storyapp.data.abstraction.Status
 import com.akmalmf.storyapp.databinding.FragmentRegisterBinding
 import com.akmalmf.storyapp.domain.utils.getText
-import com.akmalmf.storyapp.domain.utils.isValidEmail
 import com.akmalmf.storyapp.domain.utils.toInvisible
 import com.akmalmf.storyapp.domain.utils.toVisible
 import com.akmalmf.storyapp.ui.components.EmailEditText

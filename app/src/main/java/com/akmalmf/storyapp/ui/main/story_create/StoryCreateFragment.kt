@@ -3,7 +3,7 @@ package com.akmalmf.storyapp.ui.main.story_create
 
 import android.Manifest
 import android.content.Intent
-import android.graphics.Bitmap
+import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.provider.MediaStore
@@ -11,18 +11,16 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
-import com.akmalmf.storyapp.R
-import com.akmalmf.storyapp.base.BaseFragment
-import com.akmalmf.storyapp.databinding.FragmentStoryCreateBinding
-import com.akmalmf.storyapp.domain.utils.convertToFile
-import android.content.pm.PackageManager
-import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.fragment.findNavController
+import com.akmalmf.storyapp.R
+import com.akmalmf.storyapp.base.BaseFragment
 import com.akmalmf.storyapp.data.abstraction.Status
+import com.akmalmf.storyapp.databinding.FragmentStoryCreateBinding
+import com.akmalmf.storyapp.domain.utils.convertToFile
 import com.akmalmf.storyapp.domain.utils.createCustomTempFile
 import com.akmalmf.storyapp.domain.utils.getText
 import com.akmalmf.storyapp.domain.utils.reduceFileImage
@@ -36,7 +34,7 @@ import java.io.File
 
 class StoryCreateFragment : BaseFragment<FragmentStoryCreateBinding>() {
     private val viewModel: StoryCreateViewModel by hiltNavGraphViewModels(R.id.story_nav)
-    var photo: File? = null
+    private var photo: File? = null
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentStoryCreateBinding
         get() = FragmentStoryCreateBinding::inflate
 
@@ -74,7 +72,7 @@ class StoryCreateFragment : BaseFragment<FragmentStoryCreateBinding>() {
                 val compresedPhoto = reduceFileImage(photo as File)
                 val requestImageFile =
                     compresedPhoto.asRequestBody("image/jpeg".toMediaTypeOrNull())
-                val imageMultipart: MultipartBody.Part? = requestImageFile?.let { it1 ->
+                val imageMultipart: MultipartBody.Part? = requestImageFile.let { it1 ->
                     MultipartBody.Part.createFormData(
                         "photo",
                         compresedPhoto.name,

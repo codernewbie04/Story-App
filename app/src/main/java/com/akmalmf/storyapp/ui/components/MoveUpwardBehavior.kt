@@ -34,7 +34,6 @@ class MoveUpwardBehavior : CoordinatorLayout.Behavior<View?> {
         return true
     }
 
-    //you need this when you swipe the snackbar(thanx to ubuntudroid's comment)
     override fun onDependentViewRemoved(parent: CoordinatorLayout, child: View, dependency: View) {
         ViewCompat.animate(child!!).translationY(0f).start()
     }

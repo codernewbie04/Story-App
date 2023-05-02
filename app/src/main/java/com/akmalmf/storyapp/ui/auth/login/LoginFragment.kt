@@ -1,24 +1,21 @@
 package com.akmalmf.storyapp.ui.auth.login
 
 
-import android.os.Bundle
-import androidx.navigation.fragment.findNavController
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
+import androidx.navigation.fragment.findNavController
 import com.akmalmf.storyapp.R
 import com.akmalmf.storyapp.base.BaseFragment
 import com.akmalmf.storyapp.data.abstraction.Status
 import com.akmalmf.storyapp.databinding.FragmentLoginBinding
 import com.akmalmf.storyapp.domain.utils.getText
-import com.akmalmf.storyapp.domain.utils.isValidEmail
 import com.akmalmf.storyapp.domain.utils.toInvisible
 import com.akmalmf.storyapp.domain.utils.toVisible
 import com.akmalmf.storyapp.ui.components.EmailEditText
 import com.akmalmf.storyapp.ui.components.PasswordEditText
-import com.google.android.material.textfield.TextInputLayout
 
-class LoginFragment() : BaseFragment<FragmentLoginBinding>() {
+class LoginFragment : BaseFragment<FragmentLoginBinding>() {
 
     private val viewModel: LoginViewModel by hiltNavGraphViewModels(R.id.auth_nav)
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentLoginBinding

@@ -2,8 +2,6 @@ package com.akmalmf.storyapp.domain.usecase.story
 
 import com.akmalmf.storyapp.data.abstraction.Resource
 import com.akmalmf.storyapp.domain.model.stories.DetailStoryResponse
-import com.akmalmf.storyapp.domain.model.stories.StoriesResponse
-import com.akmalmf.storyapp.domain.model.stories.StoryResponse
 import com.akmalmf.storyapp.domain.repository.StoryRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow

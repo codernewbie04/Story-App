@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-
 import com.akmalmf.storyapp.R
 import com.akmalmf.storyapp.ui.auth.AuthActivity
 import com.akmalmf.storyapp.ui.main.MainActivity

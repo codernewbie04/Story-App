@@ -8,6 +8,4 @@ import dagger.hilt.android.HiltAndroidApp
  * akmalmf007@gmail.com
  */
 @HiltAndroidApp
-class MyApp: Application() {
-
-}
+class MyApp: Application()

@@ -9,7 +9,6 @@ import com.akmalmf.storyapp.domain.usecase.story.CreateStoryUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import okhttp3.MultipartBody
-import java.io.File
 import javax.inject.Inject
 
 /**

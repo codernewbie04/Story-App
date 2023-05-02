@@ -3,12 +3,10 @@ package com.akmalmf.storyapp.ui.main.story_list
 import android.animation.Animator
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.fragment.findNavController
 import com.akmalmf.storyapp.R
-import com.akmalmf.storyapp.base.BaseFragment
 import com.akmalmf.storyapp.base.BaseFragmentWithObserve
 import com.akmalmf.storyapp.data.abstraction.Status
 import com.akmalmf.storyapp.databinding.FragmentStoryListBinding
@@ -45,7 +43,7 @@ class StoryListFragment : BaseFragmentWithObserve<FragmentStoryListBinding>() {
         activity?.onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 if (isFabOpen) {
-                    closeFABMenu();
+                    closeFABMenu()
                 } else {
                     requireActivity().finish()
                 }
@@ -59,6 +57,7 @@ class StoryListFragment : BaseFragmentWithObserve<FragmentStoryListBinding>() {
         bi.fabLogout.setOnClickListener {
             viewModel.logout()
             findNavController().navigate(R.id.action_storyListFragment_to_authActivity)
+            requireActivity().finishAffinity()
         }
         val refresh: Boolean = arguments?.getBoolean("need_refresh", false) == true
         if (refresh) {
@@ -80,17 +79,17 @@ class StoryListFragment : BaseFragmentWithObserve<FragmentStoryListBinding>() {
         bi.fabLayoutAddStory.toVisible()
         bi.fabLayoutLogout.toVisible()
         bi.fabBGLayout.toVisible()
-        bi.fab.animate().rotationBy(180F);
+        bi.fab.animate().rotationBy(180F)
         bi.fabLayoutAddStory.animate().translationY(-200F)
-        bi.fabLayoutLogout.animate().translationY(-100F);
+        bi.fabLayoutLogout.animate().translationY(-100F)
     }
 
     private fun closeFABMenu() {
         isFabOpen = false
         bi.fabBGLayout.toGone()
-        bi.fab.animate().rotation(0F);
-        bi.fabLayoutAddStory.animate().translationY(0F);
-        bi.fabLayoutLogout.animate().translationY(0F);
+        bi.fab.animate().rotation(0F)
+        bi.fabLayoutAddStory.animate().translationY(0F)
+        bi.fabLayoutLogout.animate().translationY(0F)
         bi.fabLayoutLogout.animate().setListener(object : Animator.AnimatorListener {
             override fun onAnimationStart(animation: Animator) {
             }

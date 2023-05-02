@@ -26,7 +26,7 @@ class StoryListViewModel @Inject constructor(
 
     fun getStories() {
         viewModelScope.launch {
-            storyListUsecase.invoke().collect() {
+            storyListUsecase.invoke().collect {
                 _stories.postValue(it)
             }
         }

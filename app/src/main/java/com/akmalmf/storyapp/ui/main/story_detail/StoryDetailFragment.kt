@@ -12,7 +12,6 @@ import com.akmalmf.storyapp.data.abstraction.Status
 import com.akmalmf.storyapp.databinding.FragmentStoryDetailBinding
 import com.akmalmf.storyapp.domain.utils.toInvisible
 import com.akmalmf.storyapp.domain.utils.toVisible
-import dagger.hilt.EntryPoint
 
 
 class StoryDetailFragment : BaseFragment<FragmentStoryDetailBinding>() {

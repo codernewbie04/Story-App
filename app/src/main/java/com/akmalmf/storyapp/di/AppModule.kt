@@ -1,7 +1,6 @@
 package com.akmalmf.storyapp.di
 
 import android.content.Context
-import android.util.Log
 import com.akmalmf.storyapp.data.remote.AuthApiService
 import com.akmalmf.storyapp.data.remote.StoryApiService
 import com.akmalmf.storyapp.data.repository.AuthRepositoryImpl
@@ -15,10 +14,6 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 /**

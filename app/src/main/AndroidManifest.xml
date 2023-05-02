@@ -32,7 +32,7 @@
         <activity
             android:name=".ui.splash_screen.SplashScreenActivity"
             android:exported="true"
-            android:theme="@style/Theme.StoryApp">
+            android:theme="@style/SplashScreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
