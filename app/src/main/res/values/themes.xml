@@ -27,8 +27,6 @@
     </style>
 
 
-
-
     <style name="LayoutTextFieldOutline" parent="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="fontFamily">@font/lato_light</item>
         <item name="hintTextColor">@color/gray_600</item>

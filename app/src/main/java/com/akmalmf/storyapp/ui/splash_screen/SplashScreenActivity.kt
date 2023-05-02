@@ -22,5 +22,6 @@ class SplashScreenActivity : AppCompatActivity() {
         } else {
             AuthActivity.start(this)
         }
+        finishAffinity()
     }
 }

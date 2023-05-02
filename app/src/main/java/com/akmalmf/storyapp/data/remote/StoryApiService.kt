@@ -19,7 +19,7 @@ import retrofit2.http.Query
 interface StoryApiService {
     //Next update: Implement pagination
     @GET("stories")
-    suspend fun getStories(location: Int = 0): StoriesResponse
+    suspend fun getStories(): StoriesResponse
 
     @GET("stories/{id}")
     suspend fun detailStory(@Path("id") id: String): DetailStoryResponse

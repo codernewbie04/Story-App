@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.akmalmf.storyapp.data.abstraction.Resource
 import com.akmalmf.storyapp.domain.model.stories.StoriesResponse
+import com.akmalmf.storyapp.domain.repository.SharePrefRepository
 import com.akmalmf.storyapp.domain.usecase.story.GetStoryUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -16,16 +17,23 @@ import javax.inject.Inject
  * akmalmf007@gmail.com
  */
 @HiltViewModel
-class StoryListViewModel @Inject constructor(private val storyListUsecase: GetStoryUseCase): ViewModel(){
+class StoryListViewModel @Inject constructor(
+    private val storyListUsecase: GetStoryUseCase,
+    private val sharPref: SharePrefRepository
+) : ViewModel() {
     private val _stories = MutableLiveData<Resource<StoriesResponse>>()
     val stories: LiveData<Resource<StoriesResponse>> get() = _stories
 
-    private fun getStories(){
+    fun getStories() {
         viewModelScope.launch {
-            storyListUsecase.invoke().collect(){
+            storyListUsecase.invoke().collect() {
                 _stories.postValue(it)
             }
         }
+    }
+
+    fun logout() {
+        sharPref.setAccessToken("")
     }
 
     init {

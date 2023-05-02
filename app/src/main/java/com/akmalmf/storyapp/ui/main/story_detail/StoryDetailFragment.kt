@@ -1,60 +1,77 @@
 package com.akmalmf.storyapp.ui.main.story_detail
 
-import android.os.Bundle
-import androidx.fragment.app.Fragment
+
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
+import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
+import androidx.navigation.fragment.findNavController
+import coil.load
 import com.akmalmf.storyapp.R
+import com.akmalmf.storyapp.base.BaseFragment
+import com.akmalmf.storyapp.data.abstraction.Status
+import com.akmalmf.storyapp.databinding.FragmentStoryDetailBinding
+import com.akmalmf.storyapp.domain.utils.toInvisible
+import com.akmalmf.storyapp.domain.utils.toVisible
+import dagger.hilt.EntryPoint
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [StoryDetailFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class StoryDetailFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+class StoryDetailFragment : BaseFragment<FragmentStoryDetailBinding>() {
+    private val viewModel: StoryDetailViewModel by hiltNavGraphViewModels(R.id.story_nav)
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+    override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentStoryDetailBinding
+        get() = FragmentStoryDetailBinding::inflate
+
+    override fun initView() {
+        val id: String? = arguments?.getString("id")
+        if (id == null) {
+            findNavController().navigate(
+                StoryDetailFragmentDirections.actionStoryDetailFragmentToStoryListFragment(
+                    false
+                )
+            )
+        } else {
+            viewModel.detailStory(id).observe(this) {
+                when (it.status) {
+                    Status.LOADING -> {
+                        bi.apply {
+                            imageStory.toInvisible()
+                            textDescription.toInvisible()
+                            shimmerStory.toVisible()
+                            shimmerStory.startShimmer()
+                        }
+
+                    }
+
+                    Status.SUCCESS -> {
+                        bi.apply {
+                            val story = it.data?.story
+                            if (story != null) {
+                                imageStory.load(story.photoUrl) {
+                                    placeholder(R.drawable.ic_image_placeholder)
+                                    error(R.drawable.ic_image_error)
+                                }
+                                appBar.textToolbar.text = story.name
+                                textDescription.text = story.description
+                                textCreatedAt.text = story.createdAt
+                            }
+                            imageStory.toVisible()
+                            textDescription.toVisible()
+                            shimmerStory.toInvisible()
+                            shimmerStory.stopShimmer()
+                        }
+                    }
+
+                    Status.ERROR -> {
+                        (it.data?.message ?: it.message)?.let { it1 -> snackBarError(it1) }
+                        findNavController().navigate(
+                            StoryDetailFragmentDirections.actionStoryDetailFragmentToStoryListFragment(
+                                false
+                            )
+                        )
+                    }
+                }
+            }
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_story_detail, container, false)
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment StoryDetailFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            StoryDetailFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }
 }

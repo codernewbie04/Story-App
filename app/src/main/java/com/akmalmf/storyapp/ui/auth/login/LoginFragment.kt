@@ -14,6 +14,7 @@ import com.akmalmf.storyapp.domain.utils.getText
 import com.akmalmf.storyapp.domain.utils.isValidEmail
 import com.akmalmf.storyapp.domain.utils.toInvisible
 import com.akmalmf.storyapp.domain.utils.toVisible
+import com.akmalmf.storyapp.ui.components.EmailEditText
 import com.akmalmf.storyapp.ui.components.PasswordEditText
 import com.google.android.material.textfield.TextInputLayout
 
@@ -23,11 +24,8 @@ class LoginFragment() : BaseFragment<FragmentLoginBinding>() {
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentLoginBinding
         get() = FragmentLoginBinding::inflate
 
-    override fun initObservable() {
-
-    }
-
     override fun initView() {
+        bi.appBar.textToolbar.text = "Masuk"
         val email: String? = arguments?.getString("email")
         if (email != null) {
             bi.textInputEmail.editText?.setText(email)
@@ -42,8 +40,10 @@ class LoginFragment() : BaseFragment<FragmentLoginBinding>() {
                     .observe(requireActivity()) {
                         when (it.status) {
                             Status.LOADING -> {
-                                bi.progressBar.toVisible()
-                                bi.buttonLogin.toInvisible()
+                                bi.apply {
+                                    progressBar.toVisible()
+                                    buttonLogin.toInvisible()
+                                }
                             }
 
                             Status.SUCCESS -> {
@@ -55,14 +55,18 @@ class LoginFragment() : BaseFragment<FragmentLoginBinding>() {
                                     findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToMainActivity())
                                     requireActivity().finish()
                                 }
-                                bi.progressBar.toInvisible()
-                                bi.buttonLogin.toVisible()
+                                bi.apply {
+                                    progressBar.toInvisible()
+                                    buttonLogin.toVisible()
+                                }
                             }
 
                             Status.ERROR -> {
                                 it.data?.let { it1 -> snackBarError(it1.message) }
-                                bi.progressBar.toInvisible()
-                                bi.buttonLogin.toVisible()
+                                bi.apply {
+                                    progressBar.toInvisible()
+                                    buttonLogin.toVisible()
+                                }
                             }
                         }
                     }
@@ -70,15 +74,10 @@ class LoginFragment() : BaseFragment<FragmentLoginBinding>() {
         }
     }
 
-    private fun formValidation(email: TextInputLayout, password: PasswordEditText): Boolean {
-        if (email.getText().isEmpty()) email.helperText = "Masukan email dengan benar"
-        else if (!isValidEmail(email.getText())) email.helperText = "Email tidak valid!"
-        else email.helperText = null
+    private fun formValidation(email: EmailEditText, password: PasswordEditText): Boolean {
+        if(email.getText().isEmpty()) email.helperText = "Email tidak boleh kosong!"
+        if(password.getText().isEmpty()) password.helperText = "Password tidak boleh kosong!"
 
-        if (!password.isCorrectPassword() || !isValidEmail(email.getText())) {
-            return false
-        }
-
-        return true
+        return password.isCorrectPassword() && email.isEmailCorrect()
     }
 }

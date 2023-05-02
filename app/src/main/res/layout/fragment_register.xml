@@ -50,7 +50,7 @@
             tools:ignore="TextContrastCheck" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
+    <com.akmalmf.storyapp.ui.components.EmailEditText
         android:id="@+id/textInputEmail"
         style="@style/LayoutTextFieldOutline"
         android:layout_width="match_parent"
@@ -73,7 +73,7 @@
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
             tools:ignore="TextContrastCheck" />
-    </com.google.android.material.textfield.TextInputLayout>
+    </com.akmalmf.storyapp.ui.components.EmailEditText>
 
     <com.akmalmf.storyapp.ui.components.PasswordEditText
         android:id="@+id/textInputPassword"
@@ -97,7 +97,7 @@
     </com.akmalmf.storyapp.ui.components.PasswordEditText>
 
     <TextView
-        android:id="@+id/textRegister"
+        android:id="@+id/txtLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -123,7 +123,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textRegister" />
+        app:layout_constraintTop_toBottomOf="@+id/txtLogin" />
     <ProgressBar
         android:id="@+id/progressBar"
         style="?android:attr/progressBarStyle"

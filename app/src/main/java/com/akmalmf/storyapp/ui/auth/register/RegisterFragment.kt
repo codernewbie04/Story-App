@@ -18,6 +18,7 @@ import com.akmalmf.storyapp.domain.utils.getText
 import com.akmalmf.storyapp.domain.utils.isValidEmail
 import com.akmalmf.storyapp.domain.utils.toInvisible
 import com.akmalmf.storyapp.domain.utils.toVisible
+import com.akmalmf.storyapp.ui.components.EmailEditText
 import com.akmalmf.storyapp.ui.components.PasswordEditText
 import com.google.android.material.textfield.TextInputLayout
 
@@ -31,6 +32,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() {
     }
 
     private fun setupViews() {
+        bi.appBar.textToolbar.text = "Daftar"
         bi.buttonRegister.setOnClickListener {
             if (formValidation(bi.textInputName, bi.textInputEmail, bi.textInputPassword)) {
                 viewModel.register(
@@ -40,8 +42,10 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() {
                 ).observe(requireActivity()) {
                     when (it.status) {
                         Status.LOADING -> {
-                            bi.progressBar.toVisible()
-                            bi.buttonRegister.toInvisible()
+                            bi.apply {
+                                progressBar.toVisible()
+                                buttonRegister.toInvisible()
+                            }
                         }
 
                         Status.SUCCESS -> {
@@ -55,44 +59,40 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() {
                                     )
                                 )
                             }
-                            bi.progressBar.toInvisible()
-                            bi.buttonRegister.toVisible()
+                            bi.apply {
+                                progressBar.toInvisible()
+                                buttonRegister.toVisible()
+                            }
                         }
 
                         Status.ERROR -> {
-                            it.data?.let { it1 -> snackBarError(it1.message) }
-                            bi.progressBar.toInvisible()
-                            bi.buttonRegister.toVisible()
+                            bi.apply {
+                                progressBar.toInvisible()
+                                buttonRegister.toVisible()
+                            }
+                            (it.data?.message ?: it.message)?.let { it1 -> snackBarError(it1) }
                         }
                     }
                 }
             }
         }
+        bi.txtLogin.setOnClickListener{
+            findNavController().navigate(RegisterFragmentDirections.actionRegisterFragmentToLoginFragment(""))
+        }
     }
 
     private fun formValidation(
         name: TextInputLayout,
-        email: TextInputLayout,
+        email: EmailEditText,
         password: PasswordEditText
     ): Boolean {
         if (name.getText().isEmpty()) name.helperText = "Nama tidak boleh kosong!"
         else name.helperText = null
 
-        if (email.getText().isEmpty()) email.helperText = "Masukan email dengan benar"
-        else if (!isValidEmail(email.getText())) email.helperText = "Email tidak valid!"
-        else email.helperText = null
+        if(email.getText().isEmpty()) email.helperText = "Email tidak boleh kosong!"
 
-        if (!password.isCorrectPassword() || !isValidEmail(email.getText()) || name.getText()
-                .isEmpty()
-        ) {
-            return false
-        }
-        return true
+        if(password.getText().isEmpty()) password.helperText = "Password tidak boleh kosong!"
+
+        return password.isCorrectPassword() && email.isEmailCorrect() && name.getText().isNotEmpty()
     }
-
-    override fun initObservable() {
-
-    }
-
-
 }

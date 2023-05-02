@@ -3,6 +3,9 @@ package com.akmalmf.storyapp.di
 import android.util.Log
 import com.akmalmf.storyapp.data.remote.AuthApiService
 import com.akmalmf.storyapp.data.remote.AuthInterceptor
+import com.akmalmf.storyapp.data.remote.StoryApiService
+import com.akmalmf.storyapp.di.qualifiers.AuthenticatedRetrofitClient
+import com.akmalmf.storyapp.di.qualifiers.NotAuthenticatedRetrofitClient
 import com.akmalmf.storyapp.domain.repository.SharePrefRepository
 import dagger.Module
 import dagger.Provides
@@ -22,37 +25,29 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 class NetworkModule {
-//    @Provides
-//    @Singleton
-//    fun provideAPI(): AuthApiService {
-//        Log.i("give_api", "Provide API!")
-//        val logging = HttpLoggingInterceptor()
-//        logging.setLevel(HttpLoggingInterceptor.Level.BODY)
-//        val client: OkHttpClient = OkHttpClient.Builder()
-//            .addInterceptor(logging)
-//            .build()
-//
-//        val retrofit = Retrofit.Builder()
-//            .baseUrl("https://story-api.dicoding.dev/v1/")
-//            .client(client)
-//            .addConverterFactory(GsonConverterFactory.create())
-//            .build()
-//        return retrofit.create(AuthApiService::class.java)
-//
-//    }
-
     @Singleton
     @Provides
-    fun providesHttpLoggingInterceptor() = HttpLoggingInterceptor()
-        .apply {
-            level = HttpLoggingInterceptor.Level.BODY
-        }
+    fun providesHttpLoggingInterceptor(): HttpLoggingInterceptor{
+        val logging = HttpLoggingInterceptor()
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY)
+        return logging
+    }
 
 
 
     @Singleton
     @Provides
-    fun providesOkHttpClient(httpLoggingInterceptor: HttpLoggingInterceptor, sharePrefRepository: SharePrefRepository): OkHttpClient {
+    @NotAuthenticatedRetrofitClient
+    fun providesOkHttpClientNotAuthenticate(httpLoggingInterceptor: HttpLoggingInterceptor)= OkHttpClient
+        .Builder()
+        .addInterceptor(httpLoggingInterceptor)
+        .build()
+
+    @Singleton
+    @Provides
+    @AuthenticatedRetrofitClient
+    fun providesOkHttpClientAuthenticate(httpLoggingInterceptor: HttpLoggingInterceptor, sharePrefRepository: SharePrefRepository): OkHttpClient {
+        Log.i("give_api", "Provide API!")
         val token = sharePrefRepository.getAccessToken()
         return if (token.isEmpty()){
             OkHttpClient
@@ -71,7 +66,19 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun provideRetrofitClient(client: OkHttpClient): Retrofit {
+    @NotAuthenticatedRetrofitClient
+    fun provideRetrofitClientNotAuthenticate(@NotAuthenticatedRetrofitClient client: OkHttpClient): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl("https://story-api.dicoding.dev/v1/")
+            .client(client)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+    }
+
+    @Provides
+    @Singleton
+    @AuthenticatedRetrofitClient
+    fun provideRetrofitClientAuthenticate(@AuthenticatedRetrofitClient client: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .baseUrl("https://story-api.dicoding.dev/v1/")
             .client(client)
@@ -81,6 +88,11 @@ class NetworkModule {
 
     @Singleton
     @Provides
-    fun provideAuthApiService(retrofit: Retrofit): AuthApiService =
+    fun provideAuthApiService(@NotAuthenticatedRetrofitClient retrofit: Retrofit): AuthApiService =
         retrofit.create(AuthApiService::class.java)
+
+    @Singleton
+    @Provides
+    fun provideStoryApiService(@AuthenticatedRetrofitClient retrofit: Retrofit): StoryApiService =
+        retrofit.create(StoryApiService::class.java)
 }

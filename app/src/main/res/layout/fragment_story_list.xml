@@ -1,66 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout  xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:background="@color/gray_100"
+    android:fitsSystemWindows="true"
     tools:context=".ui.main.story_list.StoryListFragment">
-    <com.facebook.shimmer.ShimmerFrameLayout
-        android:id="@+id/shimmerStories"
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmerStories"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <include layout="@layout/item_stories_shimmer"/>
+
+                <include layout="@layout/item_stories_shimmer" />
+
+                <include layout="@layout/item_stories_shimmer"/>
+                <include layout="@layout/item_stories_shimmer"/>
+            </LinearLayout>
+        </com.facebook.shimmer.ShimmerFrameLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvStories"
+            android:visibility="visible"
+            android:nestedScrollingEnabled="true"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:itemCount="10"
+            tools:listitem="@layout/item_stories"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <View
+        android:id="@+id/fabBGLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:background="#66000000"
+        android:visibility="invisible"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center">
-                <include layout="@layout/item_stories_shimmer"/>
-                <include layout="@layout/item_stories_shimmer"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center">
-                <include layout="@layout/item_stories_shimmer"/>
-                <include layout="@layout/item_stories_shimmer"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center">
-                <include layout="@layout/item_stories_shimmer"/>
-                <include layout="@layout/item_stories_shimmer"/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center">
-                <include layout="@layout/item_stories_shimmer"/>
-                <include layout="@layout/item_stories_shimmer"/>
-            </LinearLayout>
-        </LinearLayout>
-    </com.facebook.shimmer.ShimmerFrameLayout>
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvStories"
-        android:visibility="gone"
-        android:nestedScrollingEnabled="true"
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:id="@+id/fabLayoutAddStory"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:itemCount="10"
-        tools:listitem="@layout/item_stories"
-        app:layoutManager=".ui.components.AutoFitGridLayoutManager"
-        />
+        android:layout_marginEnd="23dp"
+        android:padding="12dp"
+        android:clipToPadding="false"
+        app:layout_behavior=".ui.components.MoveUpwardBehavior"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="23dp"
+        android:layout_gravity="bottom|end"
+        android:visibility="gone">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/create_new_story"
+            android:textColor="@color/white"/>
 
-</LinearLayout>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabAddStory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            app:srcCompat="@drawable/ic_note"
+            app:fabSize="mini"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/fabLayoutLogout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="12dp"
+        android:clipToPadding="false"
+        android:layout_marginEnd="23dp"
+        android:gravity="center_vertical"
+        app:layout_behavior=".ui.components.MoveUpwardBehavior"
+        android:layout_marginBottom="23dp"
+        android:layout_gravity="bottom|end"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/logout"
+            android:textColor="@color/white"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabLogout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            app:srcCompat="@drawable/ic_logout"
+            app:fabSize="mini"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/fab_margin"
+        android:gravity="center_vertical"
+        android:clipToPadding="false"
+        app:layout_behavior=".ui.components.MoveUpwardBehavior"
+        android:padding="12dp"
+        android:layout_marginBottom="@dimen/fab_margin"
+        android:layout_gravity="bottom|end">
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:gravity="center_vertical"
+            app:srcCompat="@drawable/dicoding_logo"
+            app:fabSize="normal"/>
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

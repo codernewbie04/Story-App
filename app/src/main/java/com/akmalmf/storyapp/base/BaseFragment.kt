@@ -29,18 +29,16 @@ abstract class BaseFragment<VB: ViewBinding> : Fragment() {
     protected val bi: VB get() = _bi!!
 
     abstract val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> VB
-    abstract fun initObservable()
+
     abstract fun initView()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _bi = bindingInflater(inflater, container, false)
-        initObservable()
         return _bi!!.root
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
-        initObservable()
     }
 
     override fun onDestroyView() {
