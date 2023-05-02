@@ -14,11 +14,11 @@ This repository implements MVVM architecture using Hilt, Retrofit, and Coil.
 <br>
 <br>
 <div align="center">
-  <a href="https://github.com/codernewbie04/MyDoc">
-    <img src="android/app/src/main/res/drawable/mydoc_logo.png" alt="Logo" width="150" height="150">
+  <a href="https://github.com/codernewbie04/Story-App">
+    <img src="app/src/main/res/mipmap-xxhdpi/ic_launcher.png" alt="Logo" width="150" height="150">
   </a>
 
-  <h3 align="center">MyDoc</h3>
+  <h3 align="center">StoryApp</h3>
 
   <p align="center">
     I use this repository as a dicoding submission for the "Belajar Pengembangan Aplikasi Android Intermediate" class. 
@@ -34,7 +34,7 @@ This repository implements MVVM architecture using Hilt, Retrofit, and Coil.
 <br />
 
 #### The app has following packages:
-1. **base**: refers to a base class or framework that is used as the basis for implementing common and basic functions
+1. **base**: Refers to a base class or framework that is used as the basis for implementing common and basic functions
 2. **data**: It contains all the data accessing and manipulating components.
 3. **di**: Dependency providing classes using Hilt.
 4. **domain**: This layer contains the core business logic of the application and serves as the entry point for interaction between the presentation and data layers.
