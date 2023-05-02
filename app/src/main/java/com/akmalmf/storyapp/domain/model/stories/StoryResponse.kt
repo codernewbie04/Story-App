@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName
  * Created by Akmal Muhamad Firdaus on 30/04/2023 13:42.
  * akmalmf007@gmail.com
  */
-data class Story(
+data class StoryResponse(
     @SerializedName("id")
     val id: String,
     @SerializedName("name")

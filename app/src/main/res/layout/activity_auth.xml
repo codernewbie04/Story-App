@@ -17,5 +17,5 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:defaultNavHost="true"
-        app:navGraph="@navigation/auth_nav" />
+        app:navGraph="@navigation/auth_nav_graph" />
 </androidx.constraintlayout.widget.ConstraintLayout>

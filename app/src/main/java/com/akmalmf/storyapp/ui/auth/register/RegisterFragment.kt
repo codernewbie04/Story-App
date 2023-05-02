@@ -26,9 +26,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() {
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentRegisterBinding
         get() = FragmentRegisterBinding::inflate
 
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun initView() {
         setupViews()
     }
 

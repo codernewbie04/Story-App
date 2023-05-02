@@ -60,11 +60,17 @@ dependencies {
     /*Okhttp3 Logging Interceptor */
     implementation 'com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.2'
 
+    /* Shimmer - Loading*/
+    implementation 'com.facebook.shimmer:shimmer:0.5.0'
+
     //Retrofit Gson Converter
     implementation "com.squareup.retrofit2:converter-gson:2.9.0"
 
     /* Gson Converter */
     implementation 'com.google.code.gson:gson:2.9.0'
+
+    /* Pagination */
+    implementation "androidx.paging:paging-runtime-ktx:3.1.1"
 
 
     //Dagger - Hilt

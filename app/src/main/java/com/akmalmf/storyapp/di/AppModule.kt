@@ -22,31 +22,12 @@ import javax.inject.Singleton
  * Created by Akmal Muhamad Firdaus on 30/04/2023 15:55.
  * akmalmf007@gmail.com
  */
-@Module
+@Module(includes = [NetworkModule::class])
 @InstallIn(SingletonComponent::class)
 object AppModule {
     @Provides
     @Singleton
-    fun provideAPI(): AuthApiService{
-        Log.i("Provide_data", "Provide API!")
-        val logging = HttpLoggingInterceptor()
-        logging.setLevel(HttpLoggingInterceptor.Level.BODY)
-        val client: OkHttpClient = OkHttpClient.Builder()
-            .addInterceptor(logging)
-            .build()
-
-        val retrofit = Retrofit.Builder()
-            .baseUrl("https://story-api.dicoding.dev/v1/")
-            .client(client)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-        return retrofit.create(AuthApiService::class.java)
-
-    }
-
-    @Provides
-    @Singleton
-    fun providesAuthRepository(api: AuthApiService): AuthRepository{
+    fun providesAuthRepository(api: AuthApiService): AuthRepository {
         return AuthRepositoryImpl(api)
     }
 

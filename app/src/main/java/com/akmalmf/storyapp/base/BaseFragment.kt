@@ -30,6 +30,7 @@ abstract class BaseFragment<VB: ViewBinding> : Fragment() {
 
     abstract val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> VB
     abstract fun initObservable()
+    abstract fun initView()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _bi = bindingInflater(inflater, container, false)
@@ -38,6 +39,7 @@ abstract class BaseFragment<VB: ViewBinding> : Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initView()
         initObservable()
     }
 

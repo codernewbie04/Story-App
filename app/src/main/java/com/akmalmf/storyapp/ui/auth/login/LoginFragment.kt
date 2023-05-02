@@ -16,6 +16,7 @@ import com.akmalmf.storyapp.domain.utils.toInvisible
 import com.akmalmf.storyapp.domain.utils.toVisible
 import com.akmalmf.storyapp.ui.components.PasswordEditText
 import com.google.android.material.textfield.TextInputLayout
+
 class LoginFragment() : BaseFragment<FragmentLoginBinding>() {
 
     private val viewModel: LoginViewModel by hiltNavGraphViewModels(R.id.auth_nav)
@@ -26,51 +27,50 @@ class LoginFragment() : BaseFragment<FragmentLoginBinding>() {
 
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun initView() {
         val email: String? = arguments?.getString("email")
-        if (email != null){
+        if (email != null) {
             bi.textInputEmail.editText?.setText(email)
         }
-        setupViews()
-    }
 
-    private fun setupViews() {
         bi.textRegister.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
         }
         bi.buttonLogin.setOnClickListener {
-            if(formValidation(bi.textInputEmail, bi.textInputPassword)){
-                viewModel.login(bi.textInputEmail.getText(), bi.textInputPassword.getText()).observe(requireActivity()){
-                    when(it.status){
-                        Status.LOADING->{
-                            bi.progressBar.toVisible()
-                            bi.buttonLogin.toInvisible()
-                        }
-                        Status.SUCCESS->{
-                            if(it.data?.error == true){
-                                snackBarError(it.data.message)
-                            } else {
-                                val resData = it.data?.loginResult
-                                resData?.let { loginRes -> viewModel.setAccessToken(loginRes.token) }
-                                findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToMainActivity())
-                                requireActivity().finish()
+            if (formValidation(bi.textInputEmail, bi.textInputPassword)) {
+                viewModel.login(bi.textInputEmail.getText(), bi.textInputPassword.getText())
+                    .observe(requireActivity()) {
+                        when (it.status) {
+                            Status.LOADING -> {
+                                bi.progressBar.toVisible()
+                                bi.buttonLogin.toInvisible()
                             }
-                            bi.progressBar.toInvisible()
-                            bi.buttonLogin.toVisible()
-                        }
-                        Status.ERROR ->{
-                            it.data?.let { it1 -> snackBarError(it1.message) }
-                            bi.progressBar.toInvisible()
-                            bi.buttonLogin.toVisible()
+
+                            Status.SUCCESS -> {
+                                if (it.data?.error == true) {
+                                    snackBarError(it.data.message)
+                                } else {
+                                    val resData = it.data?.loginResult
+                                    resData?.let { loginRes -> viewModel.setAccessToken(loginRes.token) }
+                                    findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToMainActivity())
+                                    requireActivity().finish()
+                                }
+                                bi.progressBar.toInvisible()
+                                bi.buttonLogin.toVisible()
+                            }
+
+                            Status.ERROR -> {
+                                it.data?.let { it1 -> snackBarError(it1.message) }
+                                bi.progressBar.toInvisible()
+                                bi.buttonLogin.toVisible()
+                            }
                         }
                     }
-                }
             }
         }
     }
 
-    private fun formValidation(email: TextInputLayout, password: PasswordEditText):Boolean{
+    private fun formValidation(email: TextInputLayout, password: PasswordEditText): Boolean {
         if (email.getText().isEmpty()) email.helperText = "Masukan email dengan benar"
         else if (!isValidEmail(email.getText())) email.helperText = "Email tidak valid!"
         else email.helperText = null
