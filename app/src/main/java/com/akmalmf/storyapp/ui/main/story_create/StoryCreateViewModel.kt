@@ -6,6 +6,7 @@ import androidx.lifecycle.asLiveData
 import com.akmalmf.storyapp.data.abstraction.Resource
 import com.akmalmf.storyapp.domain.model.stories.AddStoryResponse
 import com.akmalmf.storyapp.domain.usecase.story.CreateStoryUseCase
+import com.google.android.gms.maps.model.LatLng
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import okhttp3.MultipartBody
@@ -19,7 +20,7 @@ import javax.inject.Inject
 class StoryCreateViewModel @Inject constructor(
     private val createStory: CreateStoryUseCase
 ): ViewModel()  {
-    fun createStory(description: String, photo: MultipartBody.Part): LiveData<Resource<AddStoryResponse>> {
-        return createStory.invoke(description, photo).asLiveData(Dispatchers.Main)
+    fun createStory(description: String, photo: MultipartBody.Part, location: LatLng?): LiveData<Resource<AddStoryResponse>> {
+        return createStory.invoke(description, photo, location).asLiveData(Dispatchers.Main)
     }
 }

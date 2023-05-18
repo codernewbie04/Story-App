@@ -1,12 +1,12 @@
 package com.akmalmf.storyapp.di
 
-import android.util.Log
 import com.akmalmf.storyapp.data.remote.AuthApiService
 import com.akmalmf.storyapp.data.remote.AuthInterceptor
 import com.akmalmf.storyapp.data.remote.StoryApiService
 import com.akmalmf.storyapp.di.qualifiers.AuthenticatedRetrofitClient
 import com.akmalmf.storyapp.di.qualifiers.NotAuthenticatedRetrofitClient
 import com.akmalmf.storyapp.domain.repository.SharePrefRepository
+import com.facebook.shimmer.BuildConfig
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -32,7 +32,11 @@ class NetworkModule {
     @Provides
     fun providesHttpLoggingInterceptor(): HttpLoggingInterceptor{
         val logging = HttpLoggingInterceptor()
-        logging.setLevel(HttpLoggingInterceptor.Level.BODY)
+        if(BuildConfig.DEBUG) {
+            logging.setLevel(HttpLoggingInterceptor.Level.BODY)
+        } else {
+            logging.setLevel(HttpLoggingInterceptor.Level.NONE)
+        }
         return logging
     }
 

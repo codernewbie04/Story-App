@@ -50,6 +50,34 @@
         android:visibility="invisible"/>
 
     <LinearLayout
+        android:id="@+id/fabLayoutMap"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="12dp"
+        android:clipToPadding="false"
+        android:layout_marginEnd="23dp"
+        android:gravity="center_vertical"
+        app:layout_behavior=".ui.components.MoveUpwardBehavior"
+        android:layout_marginBottom="23dp"
+        android:layout_gravity="bottom|end"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/story_map"
+            android:textColor="@color/white"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabMap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            app:srcCompat="@drawable/ic_map"
+            app:fabSize="mini"/>
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/fabLayoutAddStory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -75,6 +103,8 @@
             app:srcCompat="@drawable/ic_note"
             app:fabSize="mini"/>
     </LinearLayout>
+
+
 
     <LinearLayout
         android:id="@+id/fabLayoutLogout"

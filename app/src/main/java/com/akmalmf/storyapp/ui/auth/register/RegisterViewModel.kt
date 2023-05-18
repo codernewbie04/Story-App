@@ -18,10 +18,12 @@ import javax.inject.Inject
 @HiltViewModel
 class RegisterViewModel @Inject constructor(
     private val registerUseCase: RegisterUseCase
-): ViewModel() {
-    private val _registerLiveData = MutableLiveData<Resource<RegisterResponse>>()
-
-    fun register(name: String, email: String, password: String): LiveData<Resource<RegisterResponse>> {
+) : ViewModel() {
+    fun register(
+        name: String,
+        email: String,
+        password: String
+    ): LiveData<Resource<RegisterResponse>> {
         return registerUseCase(name, email, password).asLiveData(Dispatchers.Main)
     }
 }

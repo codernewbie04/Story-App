@@ -6,12 +6,15 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.fragment.findNavController
+import androidx.paging.CombinedLoadStates
+import androidx.paging.LoadState
 import com.akmalmf.storyapp.R
 import com.akmalmf.storyapp.base.BaseFragmentWithObserve
 import com.akmalmf.storyapp.data.abstraction.Status
 import com.akmalmf.storyapp.databinding.FragmentStoryListBinding
 import com.akmalmf.storyapp.domain.utils.toGone
 import com.akmalmf.storyapp.domain.utils.toVisible
+import com.akmalmf.storyapp.ui.main.story_list.adapter.LoadingAdapter
 import com.akmalmf.storyapp.ui.main.story_list.adapter.StoriesAdapter
 
 
@@ -26,14 +29,28 @@ class StoryListFragment : BaseFragmentWithObserve<FragmentStoryListBinding>() {
         get() = FragmentStoryListBinding::inflate
 
     override fun initView() {
-        bi.rvStories.setHasFixedSize(true)
-        bi.rvStories.adapter = adapter
+        bi.apply {
+            rvStories.setHasFixedSize(true)
+            rvStories.adapter = adapter
+            rvStories.adapter = adapter.withLoadStateHeaderAndFooter(
+                header = LoadingAdapter {
+                    adapter.retry()
+                },
+                footer = LoadingAdapter {
+                    adapter.retry()
+                }
+            )
+        }
         adapter.onItemClick = {
-            findNavController().navigate(StoryListFragmentDirections.actionStoryListFragmentToStoryDetailFragment(it.id))
+            findNavController().navigate(
+                StoryListFragmentDirections.actionStoryListFragmentToStoryDetailFragment(
+                    it.id
+                )
+            )
         }
 
         bi.fab.setOnClickListener {
-            if(isFabOpen){
+            if (isFabOpen) {
                 closeFABMenu()
             } else {
                 openFabMenu()
@@ -50,6 +67,10 @@ class StoryListFragment : BaseFragmentWithObserve<FragmentStoryListBinding>() {
             }
         })
 
+        bi.fabMap.setOnClickListener {
+            findNavController().navigate(StoryListFragmentDirections.actionStoryListFragmentToStoryMapFragment())
+        }
+
         bi.fabAddStory.setOnClickListener {
             findNavController().navigate(StoryListFragmentDirections.actionStoryListFragmentToStoryCreateFragment())
         }
@@ -59,92 +80,72 @@ class StoryListFragment : BaseFragmentWithObserve<FragmentStoryListBinding>() {
             findNavController().navigate(R.id.action_storyListFragment_to_authActivity)
             requireActivity().finishAffinity()
         }
-        val refresh: Boolean = arguments?.getBoolean("need_refresh", false) == true
-        if (refresh) {
-            viewModel.getStories()
-        }
     }
 
     override fun onResume() {
         super.onResume()
-        if(isFabOpen){
+        if (isFabOpen) {
             openFabMenu()
         } else {
             closeFABMenu()
         }
+        adapter.refresh()
     }
 
     private fun openFabMenu() {
         isFabOpen = true
-        bi.fabLayoutAddStory.toVisible()
-        bi.fabLayoutLogout.toVisible()
-        bi.fabBGLayout.toVisible()
-        bi.fab.animate().rotationBy(180F)
-        bi.fabLayoutAddStory.animate().translationY(-200F)
-        bi.fabLayoutLogout.animate().translationY(-100F)
+        bi.apply {
+            fabLayoutAddStory.toVisible()
+            fabLayoutLogout.toVisible()
+            fabLayoutMap.toVisible()
+            fabBGLayout.toVisible()
+            fab.animate().rotationBy(180F)
+            fabLayoutMap.animate().translationY(-300F)
+            fabLayoutAddStory.animate().translationY(-200F)
+            fabLayoutLogout.animate().translationY(-100F)
+        }
     }
 
     private fun closeFABMenu() {
         isFabOpen = false
-        bi.fabBGLayout.toGone()
-        bi.fab.animate().rotation(0F)
-        bi.fabLayoutAddStory.animate().translationY(0F)
-        bi.fabLayoutLogout.animate().translationY(0F)
-        bi.fabLayoutLogout.animate().setListener(object : Animator.AnimatorListener {
-            override fun onAnimationStart(animation: Animator) {
-            }
-
-            override fun onAnimationEnd(animation: Animator) {
-                if (!isFabOpen) {
-                    bi.fabLayoutAddStory.toGone()
-                    bi.fabLayoutLogout.toGone()
+        bi.apply {
+            fabBGLayout.toGone()
+            fab.animate().rotation(0F)
+            fabLayoutMap.animate().translationY(0F)
+            fabLayoutAddStory.animate().translationY(0F)
+            fabLayoutLogout.animate().translationY(0F)
+            fabLayoutLogout.animate().setListener(object : Animator.AnimatorListener {
+                override fun onAnimationStart(animation: Animator) {
                 }
-            }
 
-            override fun onAnimationCancel(animation: Animator) {
-            }
-
-            override fun onAnimationRepeat(animation: Animator) {
-            }
-        })
-    }
-
-    override fun initObservable() {
-        viewModel.stories.observe(this){
-            when(it.status){
-                Status.LOADING -> {
-                    bi.apply {
-                        shimmerStories.toVisible()
-                        shimmerStories.startShimmer()
-                    }
-
-                }
-                Status.SUCCESS -> {
-                    if (it.data?.error == true){
-                        snackBarError(it.data.message)
-                    } else {
-                        it.data?.listStory.let { it1 ->
-                            it1?.let { it2 -> adapter.setItem(it2.toMutableList()) }
+                override fun onAnimationEnd(animation: Animator) {
+                    if (!isFabOpen) {
+                        bi.apply {
+                            fabLayoutAddStory.toGone()
+                            fabLayoutLogout.toGone()
+                            fabLayoutMap.toGone()
                         }
                     }
-
-                    bi.apply {
-                        shimmerStories.toGone()
-                        shimmerStories.stopShimmer()
-                        rvStories.toVisible()
-                    }
                 }
-                Status.ERROR -> {
-                    bi.apply {
-                        shimmerStories.toGone()
-                        shimmerStories.stopShimmer()
-                    }
-                    (it.data?.message ?: it.message)?.let { it1 -> snackBarError(it1) }
-                    if(it.code == 401){
-                        viewModel.logout()
-                    }
+
+                override fun onAnimationCancel(animation: Animator) {
+                }
+
+                override fun onAnimationRepeat(animation: Animator) {
+                }
+            })
+        }
+    }
+
+
+    override fun initObservable() {
+        viewModel.stories.observe(viewLifecycleOwner) { data ->
+            run {
+                if (data != null) {
+                    adapter.submitData(viewLifecycleOwner.lifecycle, data)
                 }
             }
+
         }
     }
 }

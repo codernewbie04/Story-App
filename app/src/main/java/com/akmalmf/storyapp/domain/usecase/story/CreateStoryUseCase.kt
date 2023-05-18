@@ -3,6 +3,7 @@ package com.akmalmf.storyapp.domain.usecase.story
 import com.akmalmf.storyapp.data.abstraction.Resource
 import com.akmalmf.storyapp.domain.model.stories.AddStoryResponse
 import com.akmalmf.storyapp.domain.repository.StoryRepository
+import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -17,10 +18,10 @@ import javax.inject.Inject
 class CreateStoryUseCase @Inject constructor(
     private val repository: StoryRepository
 ) {
-    operator fun invoke(description: String, photo: MultipartBody.Part): Flow<Resource<AddStoryResponse>> {
+    operator fun invoke(description: String, photo: MultipartBody.Part, location: LatLng?): Flow<Resource<AddStoryResponse>> {
         return flow {
             emit(Resource.loading())
-            emit(repository.createStory(description, photo))
+            emit(repository.createStory(description, photo, location))
         }.flowOn(Dispatchers.IO)
     }
 }

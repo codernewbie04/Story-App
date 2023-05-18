@@ -8,7 +8,7 @@ import okhttp3.Response
  * Created by Akmal Muhamad Firdaus on 02/05/2023 10:43.
  * akmalmf007@gmail.com
  */
-class AuthInterceptor(private var token: String): Interceptor {
+class   AuthInterceptor(private var token: String): Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         var request: Request = chain.request()
         request = if (request.header("No-Authentication") == null && token.isNotEmpty()) {

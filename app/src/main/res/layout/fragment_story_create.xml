@@ -43,6 +43,16 @@
             android:inputType="textMultiLine"
             android:maxLines="3"/>
     </com.google.android.material.textfield.TextInputLayout>
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/switchLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="@string/include_gps"
+        android:fontFamily="@font/lato_regular"
+        app:layout_constraintStart_toStartOf="@+id/textInputDescription"
+        app:layout_constraintTop_toBottomOf="@+id/textInputDescription"/>
     <com.google.android.material.button.MaterialButton
         android:id="@+id/buttonCamera"
         style="@style/MainButton"
@@ -86,7 +96,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputDescription" />
+        app:layout_constraintTop_toBottomOf="@+id/switchLocation" />
     <ProgressBar
         android:id="@+id/progressBar"
         style="?android:attr/progressBarStyle"

@@ -1,7 +1,10 @@
 package com.akmalmf.storyapp.ui.auth.login
 
 
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.fragment.findNavController
@@ -68,6 +71,28 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
                         }
                     }
             }
+        }
+        startAnimation()
+    }
+
+    private fun startAnimation() {
+        bi.apply {
+            ObjectAnimator.ofFloat(greeting, View.TRANSLATION_X, 25f, 0f).apply {
+                duration = 3200
+            }.start()
+            val emailAnimation = ObjectAnimator.ofFloat(textInputEmail, View.ALPHA, 1f).setDuration(500)
+            val passwordAnimation = ObjectAnimator.ofFloat(textInputPassword, View.ALPHA, 1f).setDuration(500)
+            val registerAnimation = ObjectAnimator.ofFloat(textRegister, View.ALPHA, 1f).setDuration(500)
+            val loginAnimation = ObjectAnimator.ofFloat(buttonLogin, View.ALPHA, 1f).setDuration(500)
+            AnimatorSet().apply {
+                playSequentially(
+                    emailAnimation,
+                    passwordAnimation,
+                    registerAnimation,
+                    loginAnimation
+                )
+                startDelay = 1500
+            }.start()
         }
     }
 

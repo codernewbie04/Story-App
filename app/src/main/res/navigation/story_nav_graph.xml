@@ -21,6 +21,9 @@
             app:destination="@id/authActivity"
             app:popUpTo="@id/storyListFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_storyListFragment_to_storyMapFragment"
+            app:destination="@id/storyMapFragment" />
         <argument
             android:name="need_refresh"
             app:argType="boolean" />
@@ -55,4 +58,13 @@
         android:name="com.akmalmf.storyapp.ui.auth.AuthActivity"
         android:label="activity_auth"
         tools:layout="@layout/activity_auth" />
+    <fragment
+        android:id="@+id/storyMapFragment"
+        android:name="com.akmalmf.storyapp.ui.main.story_map.StoryMapFragment"
+        android:label="fragment_story_map"
+        tools:layout="@layout/fragment_story_map" >
+        <action
+            android:id="@+id/action_storyMapFragment_to_storyListFragment"
+            app:destination="@id/storyListFragment" />
+    </fragment>
 </navigation>

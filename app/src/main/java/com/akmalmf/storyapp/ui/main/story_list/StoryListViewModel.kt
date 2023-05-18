@@ -1,14 +1,15 @@
 package com.akmalmf.storyapp.ui.main.story_list
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.akmalmf.storyapp.data.abstraction.Resource
-import com.akmalmf.storyapp.domain.model.stories.StoriesResponse
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import com.akmalmf.storyapp.domain.model.stories.StoryResponse
 import com.akmalmf.storyapp.domain.repository.SharePrefRepository
-import com.akmalmf.storyapp.domain.usecase.story.GetStoryUseCase
+import com.akmalmf.storyapp.domain.repository.StoryRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -18,25 +19,11 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class StoryListViewModel @Inject constructor(
-    private val storyListUsecase: GetStoryUseCase,
+    private val storyRepository: StoryRepository,
     private val sharPref: SharePrefRepository
 ) : ViewModel() {
-    private val _stories = MutableLiveData<Resource<StoriesResponse>>()
-    val stories: LiveData<Resource<StoriesResponse>> get() = _stories
-
-    fun getStories() {
-        viewModelScope.launch {
-            storyListUsecase.invoke().collect {
-                _stories.postValue(it)
-            }
-        }
-    }
-
+    val stories: LiveData<PagingData<StoryResponse>> = storyRepository.getStories().cachedIn(viewModelScope)
     fun logout() {
         sharPref.setAccessToken("")
-    }
-
-    init {
-        getStories()
     }
 }

@@ -10,16 +10,16 @@ import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 /**
- * Created by Akmal Muhamad Firdaus on 02/05/2023 11:59.
+ * Created by Akmal Muhamad Firdaus on 09/05/2023 19:39.
  * akmalmf007@gmail.com
  */
-class GetStoryUseCase @Inject constructor(
+class GetStoryWithMapUserCase @Inject constructor(
     private val repository: StoryRepository
-)  {
+) {
     operator fun invoke(): Flow<Resource<StoriesResponse>> {
         return flow {
             emit(Resource.loading())
-            emit(repository.getStories())
+            emit(repository.getStoriesMap())
         }.flowOn(Dispatchers.IO)
     }
 }
