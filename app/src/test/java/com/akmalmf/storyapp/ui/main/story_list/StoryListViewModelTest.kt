@@ -8,37 +8,28 @@ import androidx.paging.PagingData
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import androidx.recyclerview.widget.ListUpdateCallback
-
 import com.akmalmf.storyapp.MainDispatcherRule
-import com.akmalmf.storyapp.data.repository.StoryPagingDataSource
 import com.akmalmf.storyapp.domain.model.stories.StoryResponse
-
 import com.akmalmf.storyapp.domain.repository.SharePrefRepository
 import com.akmalmf.storyapp.domain.repository.StoryRepository
 import com.akmalmf.storyapp.fakerepo.FakeStoryRepository
 import com.akmalmf.storyapp.getOrAwaitValue
-
 import com.akmalmf.storyapp.mock
 import com.akmalmf.storyapp.ui.main.story_list.adapter.StoriesAdapter
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertNotNull
 import kotlinx.coroutines.Dispatchers
-
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
-
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito
-
-import org.mockito.junit.MockitoJUnitRunner
-import org.mockito.Mockito.lenient
-
 import org.mockito.Mockito.reset
+import org.mockito.junit.MockitoJUnitRunner
 
 
 @ExperimentalCoroutinesApi

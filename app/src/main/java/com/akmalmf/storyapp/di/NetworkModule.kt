@@ -17,6 +17,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
+
 /**
  * Created by Akmal Muhamad Firdaus on 02/05/2023 09:27.
  * akmalmf007@gmail.com
@@ -25,6 +26,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 class NetworkModule {
     companion object {
+
         const val BASE_URL = "https://story-api.dicoding.dev/v1/"
     }
 

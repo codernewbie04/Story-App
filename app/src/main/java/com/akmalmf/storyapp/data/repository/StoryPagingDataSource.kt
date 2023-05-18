@@ -4,7 +4,6 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.akmalmf.storyapp.data.remote.StoryApiService
 import com.akmalmf.storyapp.domain.model.stories.StoryResponse
-import com.akmalmf.storyapp.domain.repository.StoryRepository
 import javax.inject.Inject
 
 /**

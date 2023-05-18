@@ -9,8 +9,6 @@ import com.akmalmf.storyapp.domain.model.stories.StoryResponse
 import com.akmalmf.storyapp.domain.repository.SharePrefRepository
 import com.akmalmf.storyapp.domain.repository.StoryRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**

@@ -2,15 +2,11 @@ package com.akmalmf.storyapp.ui.main.story_create
 
 
 import android.Manifest
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
 import android.location.Location
-import android.location.LocationListener
-import android.location.LocationManager
 import android.net.Uri
-import android.os.Bundle
 import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -21,7 +17,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.fragment.findNavController
-import com.google.android.gms.location.FusedLocationProviderClient
 import com.akmalmf.storyapp.R
 import com.akmalmf.storyapp.base.BaseFragment
 import com.akmalmf.storyapp.data.abstraction.Status
@@ -32,6 +27,7 @@ import com.akmalmf.storyapp.domain.utils.getText
 import com.akmalmf.storyapp.domain.utils.reduceFileImage
 import com.akmalmf.storyapp.domain.utils.toInvisible
 import com.akmalmf.storyapp.domain.utils.toVisible
+import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.model.LatLng
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -86,7 +82,7 @@ class StoryCreateFragment : BaseFragment<FragmentStoryCreateBinding>() {
                 val compresedPhoto = reduceFileImage(photo as File)
                 val requestImageFile =
                     compresedPhoto.asRequestBody("image/jpeg".toMediaTypeOrNull())
-                val imageMultipart: MultipartBody.Part? = requestImageFile.let { it1 ->
+                val imageMultipart: MultipartBody.Part = requestImageFile.let { it1 ->
                     MultipartBody.Part.createFormData(
                         "photo",
                         compresedPhoto.name,
@@ -233,7 +229,5 @@ class StoryCreateFragment : BaseFragment<FragmentStoryCreateBinding>() {
         private val REQUIRED_PERMISSIONS =
             arrayOf(Manifest.permission.CAMERA, Manifest.permission.ACCESS_FINE_LOCATION)
         private const val REQUEST_CODE_PERMISSIONS = 10
-        private const val MIN_TIME_BETWEEN_UPDATES: Long = 1000
-        private const val MIN_DISTANCE_CHANGE_FOR_UPDATES: Float = 10f
     }
 }

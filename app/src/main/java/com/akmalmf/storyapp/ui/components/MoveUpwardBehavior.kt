@@ -29,7 +29,8 @@ class MoveUpwardBehavior : CoordinatorLayout.Behavior<View?> {
         child: View,
         dependency: View
     ): Boolean {
-        val translationY = Math.min(0f, ViewCompat.getTranslationY(dependency) - dependency.height)
+        val translationY =
+            0f.coerceAtMost(ViewCompat.getTranslationY(dependency) - dependency.height)
         ViewCompat.setTranslationY(child, translationY)
         return true
     }

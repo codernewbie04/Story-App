@@ -6,11 +6,8 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.fragment.findNavController
-import androidx.paging.CombinedLoadStates
-import androidx.paging.LoadState
 import com.akmalmf.storyapp.R
 import com.akmalmf.storyapp.base.BaseFragmentWithObserve
-import com.akmalmf.storyapp.data.abstraction.Status
 import com.akmalmf.storyapp.databinding.FragmentStoryListBinding
 import com.akmalmf.storyapp.domain.utils.toGone
 import com.akmalmf.storyapp.domain.utils.toVisible

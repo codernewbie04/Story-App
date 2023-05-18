@@ -1,15 +1,9 @@
 package com.akmalmf.storyapp.fakerepo
 
-import androidx.lifecycle.LiveData
-import androidx.paging.PagingData
 import com.akmalmf.storyapp.data.abstraction.Resource
 import com.akmalmf.storyapp.data.abstraction.Status
-import com.akmalmf.storyapp.domain.model.stories.AddStoryResponse
-import com.akmalmf.storyapp.domain.model.stories.DetailStoryResponse
 import com.akmalmf.storyapp.domain.model.stories.StoriesResponse
 import com.akmalmf.storyapp.domain.model.stories.StoryResponse
-import com.akmalmf.storyapp.domain.repository.StoryRepository
-import okhttp3.MultipartBody
 
 /**
  * Created by Akmal Muhamad Firdaus on 10/05/2023 18:45.
@@ -24,7 +18,7 @@ class FakeStoryRepository {
 
         val storyList: List<StoryResponse> = listOf(story1, story2, story3,story4)
         val storiesResponse = StoriesResponse(false, storyList, "OK!")
-        return Resource<StoriesResponse>(status= Status.SUCCESS, data = storiesResponse, code = 200, message = "ok")
+        return Resource(status= Status.SUCCESS, data = storiesResponse, code = 200, message = "ok")
     }
 
     fun emptyResponse():Resource<StoriesResponse>{

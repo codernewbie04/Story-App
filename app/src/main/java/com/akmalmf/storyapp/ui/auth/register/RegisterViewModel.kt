@@ -1,7 +1,6 @@
 package com.akmalmf.storyapp.ui.auth.register
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import com.akmalmf.storyapp.data.abstraction.Resource

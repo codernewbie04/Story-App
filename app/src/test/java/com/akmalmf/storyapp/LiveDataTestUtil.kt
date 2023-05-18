@@ -15,7 +15,6 @@ import kotlin.time.toTimeUnit
  * akmalmf007@gmail.com
  */
 
-@OptIn(ExperimentalTime::class)
 @VisibleForTesting(otherwise = VisibleForTesting.NONE)
 fun <T> LiveData<T>.getOrAwaitValue(
     time: Long = 1,

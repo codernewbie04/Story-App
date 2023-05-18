@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.paging.LoadState
 import androidx.paging.LoadStateAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.akmalmf.storyapp.databinding.ItemStoriesShimmerBinding
 import com.akmalmf.storyapp.databinding.LoadingStateStoriesBinding
 import com.akmalmf.storyapp.domain.utils.toVisible
 
